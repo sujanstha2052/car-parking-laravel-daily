@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Zone;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -12,13 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('zones', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
-            $table->string('plate_number');
+            $table->string('name');
+            $table->integer('price_per_hour');
             $table->timestamps();
-            $table->softDeletes();
         });
+
+        Zone::create(['name' => 'Green Zone', 'price_per_hour' => 100]);
+        Zone::create(['name' => 'Yellow Zone', 'price_per_hour' => 200]);
+        Zone::create(['name' => 'Red Zone', 'price_per_hour' => 300]);
     }
 
     /**
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('zones');
     }
 };
